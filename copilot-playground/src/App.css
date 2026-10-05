@@ -1,0 +1,53 @@
+.playground {
+  width: min(100% - 2rem, 640px);
+  margin: 4rem auto;
+}
+
+.eyebrow {
+  color: #5b21b6;
+  font-weight: 600;
+}
+
+.card {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+button {
+  padding: 0.65rem 1rem;
+  border: 1px solid #5b21b6;
+  border-radius: 6px;
+  background: #5b21b6;
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #4c1d95;
+}
+
+button:focus-visible {
+  outline: 3px solid #7c3aed;
+  outline-offset: 3px;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+code {
+  padding: 0.15rem 0.3rem;
+  border-radius: 4px;
+  background: #ede9fe;
+}
