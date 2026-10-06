@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 
+// Render the Copilot playground and its interactive counter.
 function App() {
   const [count, setCount] = useState(0)
 
@@ -14,10 +15,25 @@ function App() {
         <h2 id="counter-heading">Try the counter</h2>
         <p aria-live="polite">Count: {count}</p>
         <div className="actions">
-          <button type="button" onClick={() => setCount((value) => value + 1)}>
+          <button
+            type="button"
+            onClick={
+              // Increment the counter when the button is clicked.
+              () => setCount(
+                // Derive the next count from the latest state.
+                (value) => value + 1,
+              )
+            }
+          >
             Increment
           </button>
-          <button type="button" onClick={() => setCount(0)}>
+          <button
+            type="button"
+            onClick={
+              // Reset the counter to zero when the button is clicked.
+              () => setCount(0)
+            }
+          >
             Reset
           </button>
         </div>
