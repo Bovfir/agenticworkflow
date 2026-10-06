@@ -17,9 +17,13 @@ build commands and feature ideas.
 
 The **Function Comment Review** GitHub Actions agent runs on opened, updated,
 reopened, or ready-for-review PRs touching `copilot-playground/src/**`. Draft PRs
-are skipped. It checks every implemented JavaScript/TypeScript function in that
-folder at the PR head revision, including React components, methods, arrow
-functions, and anonymous callbacks, not just changed lines.
+are skipped. It checks every implemented function in added, modified, or renamed
+JavaScript/TypeScript files within that folder at the PR head revision, including
+React components, methods, arrow functions, and anonymous callbacks. Complete
+files are reviewed, so unchanged functions within a modified file are included,
+but untouched and deleted files are ignored. Renames use the new file path.
+Assets, declaration files, and symbolic links are excluded. Incomplete changed-file
+lists (including PRs exceeding GitHub's 3,000-file limit) fail explicitly.
 
 A directly associated JSDoc, block, line, or JSX comment must explain the
 function's purpose. Empty comments, TODO-only notes, unrelated headers, and a
