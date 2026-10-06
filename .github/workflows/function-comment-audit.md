@@ -9,7 +9,7 @@ permissions:
   copilot-requests: write
 network: defaults
 tools:
-  bash: ["cat", "safeoutputs"]
+  bash: ["cat", "jq", "safeoutputs"]
   cli-proxy: true
 safe-outputs:
   mentions: false
@@ -107,3 +107,10 @@ call `safeoutputs report_incomplete` with the specific limitation; do not publis
 a partial report as a complete audit. Never silently truncate findings.
 Emit the final issue write intent once; do not probe writes or retry with variants.
 Use safe outputs for all visible writes.
+
+To publish, write the payload `{"title": "...", "body": "..."}` as a JSON file at
+`/tmp/gh-aw/agent/issue.json` using the file-write tool (or `jq -n --arg ...`),
+then run exactly: `safeoutputs create_issue . < /tmp/gh-aw/agent/issue.json`.
+Only use the allowed shell commands (`cat`, `jq`, `safeoutputs`). If a command is
+denied, do not retry with variants; call `safeoutputs report_incomplete` naming
+the denied command.
