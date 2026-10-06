@@ -45,3 +45,28 @@ those restrictions.
 The source is `.github/workflows/function-comment-review.md`. After editing it,
 run `gh aw compile function-comment-review --strict` and commit the generated
 `.github/workflows/function-comment-review.lock.yml` alongside it.
+
+## Manual full-source audit
+
+**Function Comment Audit** is a separate manually triggered workflow that checks
+all JavaScript/TypeScript functions in `copilot-playground/src`, using the same
+comment rules as the PR reviewer. It creates one issue containing the full list
+of missing explanations with file paths, line numbers, and callback names.
+Clean audits also create an issue showing zero findings. Previous issues are
+retained as history; source code is never modified.
+
+After the workflow is merged into the default branch, open **Actions > Function
+Comment Audit > Run workflow**, select the branch to audit, and start the run.
+Alternatively, run:
+
+```powershell
+gh workflow run function-comment-audit.lock.yml --repo Bovfir/agenticworkflow --ref main
+```
+
+The report identifies the exact audited commit and links to its Actions run.
+The same Actions/Copilot prerequisites apply. Assets, declaration files, and
+symbolic links are excluded. Incomplete source collection or reports too large
+for one issue are reported as incomplete, not silently truncated.
+
+After editing `.github/workflows/function-comment-audit.md`, run
+`gh aw compile function-comment-audit --strict` and commit its generated lock file.
