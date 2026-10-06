@@ -14,7 +14,7 @@ permissions:
   copilot-requests: write
 network: defaults
 tools:
-  bash: ["cat", "gh", "safeoutputs"]
+  bash: ["cat", "gh", "jq", "safeoutputs"]
   cli-proxy: true
   github:
     mode: gh-proxy
@@ -160,7 +160,13 @@ small or nested callbacks are not missed.
 
 Use the mounted `safeoutputs` CLI for all safe-output operations, not equivalent
 MCP tools. Emit each final write intent once; do not probe writes or retry with
-different payloads. Pass complex payloads as JSON on stdin.
+different payloads. Pass complex payloads as JSON on stdin: write the payload
+(for a comment, `{"body": "..."}`) to `/tmp/gh-aw/agent/comment.json` using the
+file-write tool (or `jq -n --arg ...`), then run exactly
+`safeoutputs add_comment . < /tmp/gh-aw/agent/comment.json`.
+Only use the allowed shell commands (`cat`, `gh`, `jq`, `safeoutputs`). If a
+command is denied, do not retry with variants; call
+`safeoutputs report_incomplete` naming the denied command.
 
 If no implementations exist, or every function passes, call `safeoutputs noop` with a short
 reason and post no success comment. If a file cannot be read or the review cannot
