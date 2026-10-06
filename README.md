@@ -12,3 +12,32 @@ npm run dev
 
 Open the local URL printed in the terminal. See the playground's README for
 build commands and feature ideas.
+
+## Function comment review agent
+
+The **Function Comment Review** GitHub Actions agent runs on opened, updated,
+reopened, or ready-for-review PRs touching `copilot-playground/src/**`. Draft PRs
+are skipped. It checks every implemented JavaScript/TypeScript function in that
+folder at the PR head revision, including React components, methods, arrow
+functions, and anonymous callbacks, not just changed lines.
+
+A directly associated JSDoc, block, line, or JSX comment must explain the
+function's purpose. Empty comments, TODO-only notes, unrelated headers, and a
+parent function's comment do not document nested callbacks. No particular format
+or parameter/return tags are required.
+
+Missing explanations produce one advisory PR comment with file names and line
+numbers. Clean reviews and duplicate reports produce no comment. The agent
+does not change source or block merging; it is an AI review, not a deterministic
+lint rule.
+
+GitHub Actions and Copilot access must be enabled for the repository. The workflow
+uses `copilot-requests: write` for the default Copilot engine; repository and PR
+access in the agent job remain read-only, with comments handled by gh-aw safe
+outputs. Default gh-aw team-only trigger protections apply. The compiled workflow
+skips fork PRs; it does not use `pull_request_target` or execute PR source to bypass
+those restrictions.
+
+The source is `.github/workflows/function-comment-review.md`. After editing it,
+run `gh aw compile function-comment-review --strict` and commit the generated
+`.github/workflows/function-comment-review.lock.yml` alongside it.
